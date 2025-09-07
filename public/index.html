@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trolley Problem Simulation</title>
+  <style>
+    body { background: #eee; text-align: center; }
+    canvas { background: #fff; margin-top: 20px; border: 1px solid #333; }
+    #info { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Trolley Problem Simulation</h1>
+  <div id="controls" style="margin: 20px;">
+    <div style="margin-bottom: 15px;">
+      <label for="aiModelSelect" style="font-weight: bold; margin-right: 10px;">AI Model:</label>
+      <select id="aiModelSelect" style="padding: 5px 10px; font-size: 14px; border-radius: 3px; border: 1px solid #ccc;">
+        <option value="random">Random</option>
+        <option value="gemini">gemini-2.5-pro</option>
+        <option value="openai">OpenAI GPT-5</option>
+        <option value="claude">claude-opus-4-1-20250805</option>
+        <option value="deepseek">DeepSeek-reasoner</option>
+      </select>
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label for="promptField" style="font-weight: bold; display: block; margin-bottom: 5px;">Trolley Problem Prompt:</label>
+      <textarea id="promptField"
+                style="width: 100%; max-width: 600px; height: 120px; padding: 10px; font-family: Arial, sans-serif; font-size: 12px; border: 1px solid #ccc; border-radius: 5px; resize: vertical;"
+                placeholder="Enter your trolley problem prompt here..."></textarea>
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label style="font-weight: bold; margin-right: 20px;">Number of People:</label>
+      <label for="mainTrackPeople" style="margin-right: 10px;">Main Track:</label>
+      <input type="number" id="mainTrackPeople" min="0" max="20" value="5" style="width: 60px; padding: 5px; margin-right: 20px; border: 1px solid #ccc; border-radius: 3px;">
+      <label for="sideTrackPeople" style="margin-right: 10px;">Side Track:</label>
+      <input type="number" id="sideTrackPeople" min="0" max="20" value="1" style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 3px;">
+    </div>
+    <button id="startBtn" style="padding: 10px 20px; font-size: 16px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Start Simulation</button>
+    <button id="resetBtn" style="padding: 10px 20px; font-size: 16px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;" disabled>Reset</button>
+  </div>
+  <canvas id="simCanvas" width="800" height="400"></canvas>
+  <div id="info">
+    Current Track: <span id="track">Main</span><br>
+    Selected AI Model: <span id="model">Loading...</span><br>
+    People: <span id="people">Loading...</span><br>
+    <div style="margin-top: 15px;">
+      <h3>Current Prompt</h3>
+      <div id="prompt" style="text-align: left; max-width: 600px; margin: 10px auto; padding: 10px; background: #f9f9f9; border-radius: 5px; font-family: monospace; font-size: 12px;">Will be updated when you modify the text field above</div>
+    </div>
+    <div style="margin-top: 15px;">
+      <h3>AI Response</h3>
+      <div id="aiResponse" style="text-align: left; max-width: 600px; margin: 10px auto; padding: 10px; background: #e8f4f8; border-radius: 5px; font-family: Arial, sans-serif; font-size: 12px; white-space: pre-wrap;">Waiting for AI decision...</div>
+    </div>
+    <div style="margin-top: 15px;">
+      <h3>Polish Translation</h3>
+      <div id="polishTranslation" style="text-align: left; max-width: 600px; margin: 10px auto; padding: 10px; background: #f0f8e8; border-radius: 5px; font-family: Arial, sans-serif; font-size: 12px; white-space: pre-wrap;">Waiting for translation...</div>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="sim.js"></script>
+</body>
+</html>
